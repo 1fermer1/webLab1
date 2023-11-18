@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../images/black_man_face.png" />
+        <title>MyWebLab_1</title>
+        <meta name="description" content="Мой первый опыт в html" />
+        <meta name="author" content="Ткачев Илья" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!--        <script src="../src/js/updater.js"></script>-->
+<!--        <script src="../src/js/validator.js"></script>-->
+<!--        <script src="../src/js/yInput.js"></script>-->
+<!--        <script src="../src/js/plotUpdater.js"></script>-->
+<!--        <script src="../src/js/cleaner.js"></script>-->
+<!--        <script src="../src/js/init.js"></script>-->
+<!--        <script src="../src/js/xSelector.js"></script>-->
+
+        <script src="../src/js/xButtons.js"></script>
+
+        <style>
+            ::selection {
+                color: black;
+                background-color: greenyellow;
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 100%;
+                vertical-align: baseline;
+            }
+            body {
+                font-family: Verdana, Arial, sans-serif;
+                background-color: #89a;
+                height: 100%;
+            }
+            .object {
+                width: 400px;
+                border: 2px #444 solid;
+                border-radius: 30px;
+                margin: 15px;
+                padding: 20px;
+                float: left;
+                background-color: whitesmoke;
+            }
+
+            #header {
+                font-style: italic;
+                color: mediumblue;
+                font-size: 150%;
+                height: 40px;
+                background-color: darkgray;
+                font-weight: normal;
+            }
+
+            .plot {
+                padding: 10px 20px 10px 0;
+            }
+
+            form > div {
+                margin: 5%;
+                justify-content: center;
+                text-align: center;
+            }
+            .btn_group {
+                white-space: nowrap;
+            }
+            .btn_group button, [type="text"], #r_value {
+                padding: 4px;
+                font-size: 16px;
+                background-color: #c8cfd5;
+                border-radius: 4px;
+                border: 2px solid black;
+            }
+            .btn_group button:hover, [type="text"]:hover, #r_value:hover {
+                background-color: #8399ae;
+            }
+            input[type="submit"] {
+                font-size: 16px;
+                background-color: #ff9400;
+                border-radius: 4px;
+                border: 2px solid black;
+            }
+            input[type="submit"]:hover {
+                background-color: #ff7a00;
+            }
+            input[type="reset"] {
+                font-size: 16px;
+                background-color: #8399ae;
+                border-radius: 4px;
+                border: 2px solid black;
+            }
+            input[type="reset"]:hover {
+                background-color: #6d8694;
+            }
+            .validation_info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                background: #ff9400;
+                border-radius: 10px;
+                border: 2px solid black;
+                opacity: 0;
+            }
+            .validation_info.show {
+                opacity: 1;
+                transition: opacity 0.7s;
+                margin-top: 8px;
+            }
+            .orange-button {
+                background-color: orange !important;
+            }
+
+            .table {
+                padding: 0 20px 20px 20px;
+            }
+            .table table {
+                font-size: 18px;
+                text-align: center;
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .table table tfoot {
+                text-align: right;
+            }
+            .reset-table {
+                margin: 6px 4px 2px 0;
+            }
+
+            .selected {
+                background-color: #ff9400 !important;
+            }
+            .selected:hover {
+                background-color: #ff7a00 !important;
+            }
+            .error {
+                border-radius: 4px;
+                border: 2px solid black;
+                background-color: #ff9400;
+                position: relative;
+                animation: shake .1s linear;
+                animation-iteration-count: 5;
+            }
+            @keyframes shake {
+                0% { left: -1px; }
+                100% { right: -1px; }
+            }
+        </style>
+    </head>
+    <body onload="init()">
+        <div class="wrapper">
+
+            <div id="header">
+                Ткачев Илья Андреевич, группа P3216, вариант 2627
+            </div>
+
+            <div class="object plot">
+                <svg style="margin: 0" width="400px" height="400px">
+                    <!--Чеверть круга в I четверти-->
+                    <path d="M260,198 A60,60 0 0,0 200,138 L200,198 Z" fill="blue"></path>
+                    <!--Прямоугольник в II четверти-->
+                    <polygon points="198 198, 198 80, 140 80, 140 198" fill="blue"></polygon>
+                    <!--Прямоугольный треугольник в IV четверти-->
+                    <polygon points="200 200, 320 200, 200 320" fill="blue"></polygon>
+
+                    <!--Координатные оси, стрелочки и подписи к ним-->
+                        <!--X-->
+                        <line x1="199" y1="380" x2="199" y2="20" stroke="black" stroke-width="2px"></line>
+                        <polygon points="192 30, 199 15, 206 30" fill="black"></polygon>
+                        <text x="215" y="25" text-anchor="end">Y</text>
+                        <!--Y-->
+                        <line x1="20" y1="199" x2="380" y2="199" stroke="black" stroke-width="2px"></line>
+                        <polygon points="370 192, 385 199, 370 206" fill="black"></polygon>
+                        <text x="375" y="220" text-anchor="start">X</text>
+
+                    <!--Рисочки для R на осях-->
+                        <!--X-->
+                        <line x1="260" y1="210" x2="260" y2="190" stroke="black" stroke-width="2px"></line>
+                        <line x1="320" y1="210" x2="320" y2="190" stroke="black" stroke-width="2px"></line>
+                        <line x1="140" y1="210" x2="140" y2="190" stroke="black" stroke-width="2px"></line>
+                        <line x1="80" y1="210" x2="80" y2="190" stroke="black" stroke-width="2px"></line>
+                            <!--Y-->
+                        <line x1="210" y1="260" x2="190" y2="260" stroke="black" stroke-width="2px"></line>
+                        <line x1="210" y1="320" x2="190" y2="320" stroke="black" stroke-width="2px"></line>
+                        <line x1="210" y1="140" x2="190" y2="140" stroke="black" stroke-width="2px"></line>
+                        <line x1="210" y1="80" x2="190" y2="80" stroke="black" stroke-width="2px"></line>
+                    <!--Значения R на осях-->
+                        <!--X-->
+                        <text x="320" y="185" text-anchor="middle" id="r">R</text>
+                        <text x="260" y="185" text-anchor="middle" id="r2">R/2</text>
+                        <text x="140" y="185" text-anchor="middle" id="-r2">-R/2</text>
+                        <text x="80" y="185" text-anchor="middle" id="-r">-R</text>
+                        <!--Y-->
+                        <text x="215" y="325" id="-r">-R</text>
+                        <text x="215" y="265" id="-r2">-R/2</text>
+                        <text x="215" y="145" id="r2">R/2</text>
+                        <text x="215" y="85" id="r">R</text>
+                </svg>
+            </div>
+            <!--Инпуты-->
+            <div class="object user_input">
+                <form id="form" name="form" onsubmit="receiveSubmit(); return false;">
+                    <div class="x_value btn_group">
+                        <label for="x_value">Choose X:</label>
+
+                        <button type="button" value="-3" onclick="setXValue(this)">-3</button>
+                        <button type="button" value="-2" onclick="setXValue(this)">-2</button>
+                        <button type="button" value="-1" onclick="setXValue(this)">-1</button>
+                        <button type="button" value="0" onclick="setXValue(this)">0</button>
+                        <button type="button" value="1" onclick="setXValue(this)">1</button>
+                        <button type="button" value="2" onclick="setXValue(this)">2</button>
+                        <button type="button" value="3" onclick="setXValue(this)">3</button>
+                        <button type="button" value="4" onclick="setXValue(this)">4</button>
+                        <button type="button" value="5" onclick="setXValue(this)">5</button>
+
+                        <input type="hidden" name="x_value" id="x_value">
+                    </div>
+
+                    <div class="y_value">
+                        <label for="y_value">Choose Y:</label>
+                        <input type="text" id="y_value" name="y_value" onchange="checkInput()" oninput="checkInput()">
+                    </div>
+
+                    <div class="r_value">
+                        <label for="r_value">Choose R:</label>
+                        <select id="r_value" name="r_value" onchange="changeR()">
+                            <option selected></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div class="buttons">
+                        <input id="reset-input" type="reset" value="Clean input" onclick="resetXvalue(), cleanInput()">
+                        <input id="submit" type="submit" value="Check hit">
+                    </div>
+
+                    <div class="validation_info"></div>
+                </form>
+            </div>
+            <!--Табличка с резами-->
+            <div class="object table">
+                <table id="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Current time</th>
+                        <th scope="col">Computation time</th>
+                        <th scope="col">X</th>
+                        <th scope="col">Y</th>
+                        <th scope="col">R</th>
+                        <th scope="col">Result</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <input class="reset-table" id="reset-table" type="reset" value="Clean table"
+                                   onclick="cleanTable()">
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
