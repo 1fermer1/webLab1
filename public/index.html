@@ -9,16 +9,10 @@
         <meta name="description" content="Мой первый опыт в html" />
         <meta name="author" content="Ткачев Илья" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<!--        <script src="../src/js/updater.js"></script>-->
-<!--        <script src="../src/js/validator.js"></script>-->
-<!--        <script src="../src/js/yInput.js"></script>-->
-<!--        <script src="../src/js/plotUpdater.js"></script>-->
-<!--        <script src="../src/js/cleaner.js"></script>-->
-<!--        <script src="../src/js/init.js"></script>-->
-<!--        <script src="../src/js/xSelector.js"></script>-->
-
-        <script src="../src/js/xButtons.js"></script>
+        <script src="../src/js/main.js"></script>
+        <script src="../src/js/inputHandlers.js"></script>
+        <script src="../src/js/validation.js"></script>
+        <script src="../src/js/tableHandlers.js"></script>
 
         <style>
             ::selection {
@@ -239,7 +233,7 @@
                     </div>
 
                     <div class="buttons">
-                        <input id="reset-input" type="reset" value="Clean input" onclick="resetXvalue(), cleanInput()">
+                        <input id="reset-input" type="reset" value="Clean input" onclick="cleanInput()">
                         <input id="submit" type="submit" value="Check hit">
                     </div>
 
