@@ -32,6 +32,10 @@ function checkInput() {
         yValue.value = yValue.value.slice(0, yValue.value.indexOf('.') + 11);
         yValue.classList.add('error');
     }
+    if (yValue.value.length > 10) {
+        alert("Слишком большое число");
+        yValue.classList.add('error');
+    }
 }
 
 function cleanInput() {

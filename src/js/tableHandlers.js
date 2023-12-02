@@ -19,9 +19,6 @@ function cleanTable() {
         type: "GET",
         url: "../src/php/cleaner.php",
         async: false,
-        success: function (data) {
-            alert(data);
-        },
         error: function (data) {
             alert(data);
         }

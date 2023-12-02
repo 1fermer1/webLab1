@@ -18,7 +18,7 @@ function validateValues(x, y, r) {
     if (!(y.trim() === '')) {
         let parsedY = Number(y);
         if (!isNaN(parsedY)) {
-            if (!isNaN(parsedY)) {
+            if ((parsedY > -3) && (parsedY < 5)) {
                 yValidationSuccess = true;
             } else validationInfo += "<span>Координата Y задается числом в промежутке (-3..5)!</span>";
         } else validationInfo += "<span>Координата Y задается числом!</span>";
