@@ -1,45 +1,28 @@
 <?php
-function check_hit($x, $y, $r) {
-    if ($x >= 0 && $y >= 0 && $x * $x + $y * $y <= $r * $r / 4) {
-        return true;
-    }
-
-    if ($x <= 0 && $y >= 0 && $x >= -$r / 2 && $y < $r) {
-        return true;
-    }
-
-    if ($x >= 0 && $y <= 0 && $y >= $x - $r) {
-        return true;
-    }
-
-    return false;
-}
+include 'handlers.php';
 
 date_default_timezone_set('UTC');
 
 $start = microtime(true);
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $filename = 'history.txt';
+$response = [];
 
-    // Проверка существования файла
-    if (!file_exists($filename)) {
-        // Создаем файл, если его нет
-        file_put_contents($filename, '');
+session_start();
+
+if (isset($_GET['update'])) {
+    if (!isset($_SESSION['table'])) {
+        $_SESSION['table'] = '';
     }
 
-    // Чтение из файла
-    $history = file_get_contents($filename);
-
-    exit($history);
+    $response = json_encode(array('data' => $_SESSION['table']));
+    header('Content-Type: application/json');
+    exit($response);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    unlink('history.txt');
+if (isset($_GET['clear'])) {
+    $_SESSION['table'] = '';
 
-    $message = "Table cleaned successfully!";
-
-    exit($message);
+    exit();
 }
 
 if (isset($_POST['x']) && isset($_POST['y']) && isset($_POST['r']) && isset($_POST['utc'])) {
@@ -47,9 +30,9 @@ if (isset($_POST['x']) && isset($_POST['y']) && isset($_POST['r']) && isset($_PO
     $y = $_POST['y'];
     $r = $_POST['r'];
     $utc = $_POST['utc'];
-    if (!is_numeric($x) || !is_numeric($y) || !is_numeric($r) || !is_numeric($utc)) {
+    if (!validation($x, $y, $r, $utc)) {
         http_response_code(400);
-        exit("Only number must be passed");
+        exit("Only number must be passed!\nAnd X is integer number like -3 <= X <= 5, \nY like -3 < Y < 5, \nR is integer number like 1 <= R <= 5");
     } else {
         $current_time = date("H:i:s", time() - $utc * 60);
         $checked_hit = check_hit($x, $y, $r) ? "True" : "False";
@@ -65,25 +48,16 @@ if (isset($_POST['x']) && isset($_POST['y']) && isset($_POST['r']) && isset($_PO
                     <th>$checked_hit</th>
                 </tr>";
 
-        $filename = 'history.txt';
-
-        // Проверка существования файла
-        if (!file_exists($filename)) {
-            // Создаем файл, если его нет
-            file_put_contents($filename, '');
+        if (!isset($_SESSION['table'])) {
+            $_SESSION['table'] = '';
         }
 
-        // Чтение из файла
-        $history = file_get_contents($filename);
+        $_SESSION['table'] = $row . $_SESSION['table'];
 
-        // Добавление новой строки в историю
-        $history .= $row;
-
-        // Запись в файл
-        file_put_contents($filename, $history);
-
+        $response = json_encode(array('data' => $_SESSION['table']));
+        header('Content-Type: application/json');
         http_response_code(200);
-        exit($history);
+        exit($response);
     }
 } else {
     http_response_code(400);
