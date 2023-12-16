@@ -12,7 +12,7 @@ function getTable() {
             document.querySelector('#table > tbody').innerHTML = response.data;
         },
         error: function (data) {
-            alert(data);
+            console.log(data);
         }
     });
 }

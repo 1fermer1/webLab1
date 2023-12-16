@@ -28,7 +28,7 @@ function receiveSubmit() {
                 document.querySelector('svg').appendChild(circle);
             },
             error: function (data) {
-                alert(data);
+                console.log(data);
             }
         });
     }

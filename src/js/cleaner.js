@@ -6,7 +6,7 @@ function cleanTable() {
         url: "../src/php/server.php",
         data: {'clear': "0"},
         error: function (data) {
-            alert(data);
+            console.log(data);
         }
     });
     cleanPoints();
