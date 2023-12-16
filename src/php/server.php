@@ -14,7 +14,7 @@ if (isset($_GET['update'])) {
         $_SESSION['table'] = '';
     }
 
-    $response = json_encode(array('data' => $_SESSION['table'], 'points' => $_SESSION['points'], 'last_r' => $_SESSION['last_r']));
+    $response = json_encode(array('data' => $_SESSION['table']));
     header('Content-Type: application/json');
     exit($response);
 }
@@ -53,8 +53,6 @@ if (isset($_POST['x']) && isset($_POST['y']) && isset($_POST['r']) && isset($_PO
         }
 
         $_SESSION['table'] = $row . $_SESSION['table'];
-        $_SESSION['last_r'] = $r;
-        $_SESSION['points'] = $_POST['points'];
 
         $response = json_encode(array('data' => $_SESSION['table']));
         header('Content-Type: application/json');
