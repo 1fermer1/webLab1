@@ -12,7 +12,10 @@ function validateValues(x, y, r) {
     if (x === undefined || x === '') {
         validationInfo += "<span>Не выбрано значение X!</span>";
     } else {
-        xValidationSuccess = true;
+        let parsedX = Number(x);
+        if ((parsedX >= -3) && (parsedX <= 5)) {
+            xValidationSuccess = true;
+        } else validationInfo += "<span>Координата X задается числом в промежутке [-3..5]!</span>";
     }
 
     if (!(y.trim() === '')) {
@@ -24,7 +27,9 @@ function validateValues(x, y, r) {
         } else validationInfo += "<span>Координата Y задается числом!</span>";
     } else validationInfo += "<span>Не введена координата Y!</span>";
 
-    if (!yValidationSuccess) {
+    if (yValidationSuccess) {
+        document.querySelector('#y_value').classList.remove('error');
+    } else {
         document.querySelector('#y_value').classList.add('error');
     }
 

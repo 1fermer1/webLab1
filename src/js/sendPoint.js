@@ -12,6 +12,7 @@ function receiveSubmit() {
             url: "../src/php/server.php",
             dataType: 'json',
             data: {
+                'points': document.getElementsByTagName('circle'),
                 'x': parseFloat(xValue.trim()),
                 'y': parseFloat(yValue.trim()),
                 'r': parseFloat(rValue.trim()),
